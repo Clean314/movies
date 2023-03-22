@@ -1,6 +1,8 @@
-package com.example.movies;
+package com.example.movies.service;
 
-import org.bson.types.ObjectId;
+import com.example.movies.repository.ReviewRepository;
+import com.example.movies.model.Movie;
+import com.example.movies.model.Review;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -15,12 +17,12 @@ public class ReviewService {
     @Autowired
     private MongoTemplate mongoTemplate;
 
-    public Review createReview(String imdbId, String body){
-        Review review = reviewRepository.insert(new Review(body));
+    public Review createReview(String imdbId, String reviewBody){
+        Review review = reviewRepository.insert(new Review(reviewBody));
 
         mongoTemplate.update(Movie.class)
                 .matching(Criteria.where("imdbId").is(imdbId))
-                .apply(new Update().push("reviewsIds").value(review))
+                .apply(new Update().push("reviewIds").value(review))
                 .first();
 
         return review;

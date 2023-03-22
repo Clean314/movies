@@ -1,4 +1,4 @@
-package com.example.movies;
+package com.example.movies.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,5 +25,5 @@ public class Movie {
     private List<String> genres;
     private List<String> backdrops;
     @DocumentReference
-    private List<Review> reviewsIds;
+    private List<Review> reviewIds;
 }
